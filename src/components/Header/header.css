@@ -1,0 +1,40 @@
+.sidebar{
+    margin: 0;
+    padding: 0;
+    background-color: rgb(161, 159, 159);
+    position: fixed;
+    overflow: auto;
+    height: 100%;
+    width: 300px;
+}
+.sidebar div{
+    height: 150px;
+    font-size: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sidebar a{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+}
+.sidebar a:hover{
+    background-color:  rgb(202, 195, 195);
+    transition: 0.3s;
+    color: black;
+}
+@media screen and (max-width: 700px){
+    .sidebar{
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    .sidebar a{
+        float: left;
+    }
+    .sidebar div{
+        display: none;
+    }
+}
