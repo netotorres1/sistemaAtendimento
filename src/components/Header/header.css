@@ -19,11 +19,15 @@
     flex-direction: column;
     text-align: center;
     padding: 20px;
+    color: black;
 }
 .sidebar a:hover{
     background-color:  rgb(202, 195, 195);
     transition: 0.3s;
-    color: black;
+}
+.content{
+    margin-left: 300px;
+    padding: 1px 15px;
 }
 @media screen and (max-width: 700px){
     .sidebar{
@@ -36,5 +40,8 @@
     }
     .sidebar div{
         display: none;
+    }
+    .content{
+        margin-left: 0;
     }
 }
