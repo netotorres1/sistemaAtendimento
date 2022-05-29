@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react';
 import {Link} from 'react-router-dom';
+import Title from '../../components/Title';
 import { AuthContext } from '../../contexts/auth';
 import './singIn.css';
 
@@ -19,9 +20,8 @@ function SingIn(){
 
     return(
         <div className='container-login'>
-            <div className='title'>
-                <h1>Login</h1>
-            </div>
+            <Title name='Login'>
+            </Title>
             <div className='container-login-area'>
                 <form className='login-form' onSubmit={handleSubmit}>
                     <h1 className='login-title'>Sistema de atendimento </h1>

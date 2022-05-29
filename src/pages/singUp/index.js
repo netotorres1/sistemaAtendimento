@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
 import {Link} from 'react-router-dom';
 import {AuthContext} from '../../contexts/auth';
+import Title from '../../components/Title';
 
 function SingUp(){
 
@@ -23,9 +24,8 @@ function SingUp(){
 
     return(
         <div className='container-login'>
-            <div className='title'>
-                <h1>Cadastrar</h1>
-            </div>
+            <Title name='Cadastrar'>
+            </Title>
             <div className='container-login-area'>
                 <form className='login-form' onSubmit={handleSubmit}>
                     <h1 className='login-title'>Sistema de atendimento </h1>

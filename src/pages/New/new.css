@@ -1,0 +1,32 @@
+.container-form select{
+    padding: 10px;
+    border-radius: 10px;
+    border: 3px solid grey;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+textarea{
+    height: 95px;
+    resize: none;
+}
+.container-form label{
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+.container-radio{
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+    align-items: center;
+}
+.container-radio span{
+    margin: 10px;
+}
+.container-form button{
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 10px;
+    background-color: grey;
+    border: none;
+    font-weight: bold;
+}

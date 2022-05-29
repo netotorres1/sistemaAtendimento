@@ -11,7 +11,7 @@ export default function Header(){
         <div className='sidebar'>
            <div>{user.nome}</div>
            <Link to='/dashboard'>Atendimentos</Link>
-           <Link to='/funcionarios'>Funcionarios</Link>
+           <Link to='/employees'>Funcionarios</Link>
            <Link to='/profile'>Configurações</Link>
         </div>
     )

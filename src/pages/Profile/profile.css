@@ -23,6 +23,7 @@
     border-radius: 10px;
     border: none;
     background-color: rgba(201, 201, 201, 0.603);
+    font-weight: bold;
 }
 .logout-btn{
     margin-top: 30px;
