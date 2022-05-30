@@ -2,15 +2,15 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore'
 
-let firebaseConfig = {
-    apiKey: "AIzaSyCppmoGBTyLeJOgR_1WFdpqEaqCp1E8mBE",
-    authDomain: "sistema-atendimento-ec338.firebaseapp.com",
-    projectId: "sistema-atendimento-ec338",
-    storageBucket: "sistema-atendimento-ec338.appspot.com",
-    messagingSenderId: "218649153173",
-    appId: "1:218649153173:web:00bb97f7342b9f2f95d59c",
-    measurementId: "G-TV4BZPFR06"
-};
+const firebaseConfig = {
+    apiKey: "AIzaSyD5FUCVfPluyBsMeGs3b1OPhXqE4qpOJPw",
+    authDomain: "sistema-atendimento2.firebaseapp.com",
+    projectId: "sistema-atendimento2",
+    storageBucket: "sistema-atendimento2.appspot.com",
+    messagingSenderId: "609148377816",
+    appId: "1:609148377816:web:364c5f0c869dff3c3c95ad",
+    measurementId: "G-YXWMHMKXZL"
+  };
 
 if(!firebase.apps.length){
     firebase.initializeApp(firebaseConfig);

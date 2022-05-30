@@ -4,6 +4,8 @@ import Title from "../../components/Title"
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../contexts/auth";
 import firebase from '../../services/firebaseConnection';
+import { useParams, useHistory } from "react-router-dom";
+
 
 import './new.css';
 
@@ -11,13 +13,18 @@ export default  function New(){
 
     const [funcao, setFuncao] = useState('Atendimento');
     const [status, setStatus] = useState('Aberto');
-    const [complemento, setComplementot] = useState('');
+    const [complemento, setComplemento] = useState('');
 
     const [employees, setEmployees] = useState([]);
     const [loadEmployees, SetLoadEmployees] = useState(true);
     const [employeeSelected, setEmployeeSelected] = useState(0);
 
+    const [idEmployee, setIdEmployee] = useState(false);
+
     const {user} =  useContext(AuthContext);
+
+    const {id} = useParams();
+    const history = useHistory();
 
     useEffect(() => {
         async function LoadEmployees(){
@@ -41,6 +48,10 @@ export default  function New(){
                 }
                 setEmployees(lista);
                 SetLoadEmployees(false);
+
+                if(id){
+                    loadId(lista);
+                }
             })
             .catch((error) => {
                 console.log(error);
@@ -49,11 +60,69 @@ export default  function New(){
             })
         }
         LoadEmployees();
-    })
+    },[id])
 
-    function handleRegister(e){
+    async function loadId(lista){
+        await firebase.firestore().collection('atendimentos').doc(id).get()
+        .then((snapshot) => {
+            setFuncao(snapshot.data().funcao);
+            setStatus(snapshot.data().status);
+            setComplemento(snapshot.data().complemento);
+
+            let index = lista.findIndex(item => item.id === snapshot.data().clienteId);
+            setEmployeeSelected(index);
+            setIdEmployee(true);
+        })
+        .catch((error) => {
+            console.log(error);
+            setIdEmployee(false);
+        })
+    }
+
+    async function handleRegister(e){
         e.preventDefault();
-        alert('teste')
+        
+        if(idEmployee){
+            await firebase.firestore().collection('atendimento')
+            .doc(id)
+            .update({
+                employee:employees[employeeSelected].nome,
+                employeeId: employees[employeeSelected].id,
+                funcao: funcao,
+                status: status,
+                complemento:complemento,
+                userId:user.uid
+            })
+            .then(() => {
+                console.log('Atendimento editado com sucesso.');
+                setEmployeeSelected('');
+                setComplemento('');
+                history.push('/dashboard');
+            })
+            .catch((error) => {
+                console.log('Erro ao registra.', error)
+            })
+            return;
+        }
+
+        await firebase.firestore().collection('atendimento')
+        .add({
+            created: new Date(),
+            employee:employees[employeeSelected].nome,
+            employeeId: employees[employeeSelected].id,
+            funcao: funcao,
+            status: status,
+            complemento:complemento,
+            userId:user.uid
+        })
+        .then(() => {
+            console.log('Atendimento criado com sucesso.');
+            setComplemento('');
+            setEmployeeSelected(0);
+        })
+        .catch((error) => {
+            console.log(error)
+        })
     }
     function handleChangelSelect(e){
         setFuncao(e.target.value);
@@ -107,7 +176,7 @@ export default  function New(){
                             type='text'
                             placeholder="Descreva seu problema"
                             value={complemento}
-                            onChange={(e) => setComplementot(e.target.value)}
+                            onChange={(e) => setComplemento(e.target.value)}
                             />
                             <button type='submit'>Enviar</button>
                     </form>

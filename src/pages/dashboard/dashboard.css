@@ -60,11 +60,22 @@ table td .action{
 }
 .badge{
     border-radius: 10px;
-    padding: 7px;
+    padding: 10px;
     margin: 5px;
     border: none;
     color: white;
     font-weight: bold;
+}
+.btn-more{
+    padding: 20px;
+    background-color: green;
+    font-weight: bold;
+    border: 0;
+    border-radius: 7px;
+}
+span{
+    padding: 10px;
+    border-radius: 7px;
 }
 @media screen and (max-width: 600px){
     table{

@@ -30,9 +30,9 @@
     padding: 15px;
     border-radius: 10px;
     border: none;
-    background-color: rgba(59, 59, 59, 0.603);
+    background-color: grey;
     width: 75%;
-    color: white;
+    color: black;
     font-weight: bold;
     font-size: 20px;
 }
