@@ -22,6 +22,8 @@ function Dashboard(){
     const [lastDocs, setLastDocs] = useState();
     const [isEmpty, setIsEmpty] = useState(false);
 
+    const [atendimentoRealizados, setAtendimentosRealizados] = useState([]);
+
     const [showPostModal, setShowPostModal] = useState(false);
     const [detail, setDetail] = useState();
 
@@ -33,6 +35,15 @@ function Dashboard(){
 
         }
     },[])
+
+    useEffect(() =>{
+        loadAtendimentoRealizados();
+    },[atendimentos])
+
+    async function loadAtendimentoRealizados(){
+        let atendidosAbertos = atendimentos.filter((item) => item.status !== 'realizado');
+        setAtendimentosRealizados(atendidosAbertos);   
+    }
 
     async function loadChamados(){
         await listRef.limit(5)
@@ -61,14 +72,17 @@ function Dashboard(){
                     employeeId: doc.data().employeeId,
                     created: doc.data().created,
                     createdFormated: format(doc.data().created.toDate(), 'dd/mm/yyyy'),
+                    date: doc.data().date,
+                    horario:doc.data().horario,
                     status: doc.data().status,
                     complemento: doc.data().complemento
                 })
             })
+            console.log(lista)
 
             const lastDocs = snapshot.docs[snapshot.docs.length - 1];
             
-            setAtendimentos(atendimentos => [...atendimentos, ...lista]);
+            setAtendimentos(atendimentos => [...lista]);
             setLastDocs(lastDocs);
         }else{
             setIsEmpty(true);
@@ -91,7 +105,7 @@ function Dashboard(){
                     </Title>
                 </div>
                 <div className='container-dashboard'>
-                    <span>Buscando Chamados...</span>
+                    <span>Buscando Atendimentos...</span>
                 </div>
             </div>
         )
@@ -108,29 +122,33 @@ function Dashboard(){
                     <div className='container-dashboard'>
                         <span>Nenhum atendimento registrado...</span>
                         <Link className='container-dashboard-btn' to='new'>
-                            Novo chamado
+                            Novo atendimento
                         </Link>
                     </div>
                 ): (
                     <>
                         <Link className='container-dashboard-btn' to='new'>
-                            Novo chamado
+                            Novo atendimento
                         </Link>
 
                         <table>
                             <thead>
                                 <th scope='col'>Funcionario</th>
                                 <th scope='col'>Ocupação</th>
+                                <th scope='col'>Horário</th>
+                                <th scope='col'>Data</th>
                                 <th scope='col'>Status</th>
                                 <th scope='col'>Cadastrado em</th>
                                 <th scope='col'>#</th>
                             </thead>
                             <tbody>
-                                {atendimentos.map((item, index) => {
+                                {atendimentoRealizados.map((item, index) => {
                                     return(
                                         <tr key={index}>
                                             <td data-label='employee'>{item.employee}</td>
                                             <td data-label='Funcionario'>{item.funcao}</td>
+                                            <td data-label='horario'>{item.horario}</td>
+                                            <td data-label='data'>{item.date}</td>
                                             <td className='badge'><span  style={{backgroundColor: item.status === 'Aberto' ? '#5cb85c' : 'grey'}}>{item.status}</span></td>
                                             <td data-label='Cadastrado'>{item.createdFormated}</td>
                                             <td data-label='#'>

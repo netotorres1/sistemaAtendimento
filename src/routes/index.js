@@ -8,6 +8,7 @@ import Dashboard from '../pages/dashboard';
 import Profile from '../pages/Profile';
 import Employees from '../pages/Employees';
 import New from '../pages/New';
+import Atendidos from '../pages/Atendidos';
 
 function Routes(){
 
@@ -22,6 +23,7 @@ function Routes(){
             <Rotas exact path='/employees' component={Employees} isPrivate/>
             <Rotas exact path='/new' component={New} isPrivate/>
             <Rotas exact path='/new/:id' component={New} isPrivate/>
+            <Rotas exact path='/atendidos' component={Atendidos} isPrivate/>
         </Switch>
     )
 }

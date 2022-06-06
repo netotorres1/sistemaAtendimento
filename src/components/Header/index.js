@@ -10,7 +10,8 @@ export default function Header(){
     return(
         <div className='sidebar'>
            <div>{user.nome}</div>
-           <Link to='/dashboard'>Atendimentos</Link>
+           <Link to='/dashboard'>Atendimentos Abertos</Link>
+           <Link to='/atendidos'>Atendimentos Realizados</Link>
            <Link to='/employees'>Funcionarios</Link>
            <Link to='/profile'>Configurações</Link>
         </div>

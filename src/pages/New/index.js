@@ -14,6 +14,8 @@ export default  function New(){
     const [funcao, setFuncao] = useState('Atendimento');
     const [status, setStatus] = useState('Aberto');
     const [complemento, setComplemento] = useState('');
+    const [horario, setHorario] = useState('');
+    const [date, setDate] = useState('');
 
     const [employees, setEmployees] = useState([]);
     const [loadEmployees, SetLoadEmployees] = useState(true);
@@ -63,13 +65,15 @@ export default  function New(){
     },[id])
 
     async function loadId(lista){
-        await firebase.firestore().collection('atendimentos').doc(id).get()
+        await firebase.firestore().collection('atendimento').doc(id).get()
         .then((snapshot) => {
             setFuncao(snapshot.data().funcao);
+            setHorario(snapshot.data.horario);
+            setDate(snapshot.data().date);
             setStatus(snapshot.data().status);
             setComplemento(snapshot.data().complemento);
 
-            let index = lista.findIndex(item => item.id === snapshot.data().clienteId);
+            let index = lista.findIndex(item => item.id === snapshot.data().employeeId);
             setEmployeeSelected(index);
             setIdEmployee(true);
         })
@@ -88,6 +92,8 @@ export default  function New(){
             .update({
                 employee:employees[employeeSelected].nome,
                 employeeId: employees[employeeSelected].id,
+                horario: horario,
+                date:date,
                 funcao: funcao,
                 status: status,
                 complemento:complemento,
@@ -96,6 +102,8 @@ export default  function New(){
             .then(() => {
                 console.log('Atendimento editado com sucesso.');
                 setEmployeeSelected('');
+                setHorario('');
+                setDate('');
                 setComplemento('');
                 history.push('/dashboard');
             })
@@ -110,6 +118,8 @@ export default  function New(){
             created: new Date(),
             employee:employees[employeeSelected].nome,
             employeeId: employees[employeeSelected].id,
+            horario:horario,
+            date:date,
             funcao: funcao,
             status: status,
             complemento:complemento,
@@ -118,19 +128,23 @@ export default  function New(){
         .then(() => {
             console.log('Atendimento criado com sucesso.');
             setComplemento('');
+            setHorario('');
+            setDate('');
             setEmployeeSelected(0);
         })
         .catch((error) => {
             console.log(error)
         })
+
+        if(horario !== '' && date !== '' && funcao !== ''){
+            console.log('Preencha todos os campos antes de prosseguir.')
+        }
     }
     function handleChangelSelect(e){
         setFuncao(e.target.value);
-        console.log(e.target.value)
     }
     function handleOptionChange(e){
         setStatus(e.target.value);
-        console.log(e.target.value)
     }
     function handleChangeCostumers(e){
         setEmployeeSelected(e.target.value);
@@ -154,11 +168,15 @@ export default  function New(){
                                     )
                                 })}
                             </select>
+                        <label>Horário</label>
+                            <input type='text' placeholder='Digite o horario' value={horario} onChange={(e) => setHorario(e.target.value)}/>  
+                        <label>Data</label>
+                            <input type="date" onChange={(e) => {setDate(e.target.value)}}/>
                         <label>Função</label>
                             <select value={funcao} onChange={handleChangelSelect}>
-                                <option value='corrida'>Corrida</option>
-                                <option value='corre'>corre</option>
-                                <option value='lolzinho'>lolzinho</option>
+                                <option value='corrida'>Atendimento 1</option>
+                                <option value='corre'>Atendimento 2</option>
+                                <option value='lolzinho'>Atendimento 3</option>
                             </select>
                         <label>Status</label>
                         <div className="container-radio">
